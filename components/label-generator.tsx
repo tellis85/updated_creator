@@ -68,7 +68,7 @@ export const LabelGenerator = () => {
     return `/templates/daltile/${cleanName}`;
   };
 
-  const Label = ({ scale = 1, rotated = false }) => {
+  const Label = ({ scale = 1}) => {
     const selectedData = labelData.find(item => 
       item.Brand === selectedBrand &&
       (selectedCollection === '' || item.Collection === selectedCollection) &&
