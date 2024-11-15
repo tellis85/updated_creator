@@ -4,7 +4,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import Image from 'next/image';
 
 interface LabelItem {
   Brand: string;
@@ -69,7 +68,7 @@ export const LabelGenerator = () => {
     return `/templates/daltile/${cleanName}`;
   };
 
-  const Label = ({ scale = 1 }) => {
+  const Label = ({ scale = 1, rotated = false }) => {
     const selectedData = labelData.find(item => 
       item.Brand === selectedBrand &&
       (selectedCollection === '' || item.Collection === selectedCollection) &&
@@ -115,14 +114,13 @@ export const LabelGenerator = () => {
         }}
       >
         {templatePath && (
-          <Image 
-          src={templatePath}
-          alt="Label Template"
-          className="w-full h-full object-contain"
-          width={1000} 
-          height={1500}
-          onError={() => {
-            console.error('Template load error:', templatePath);
+          <img 
+            src={templatePath}
+            alt="Label Template"
+            className="w-full h-full object-contain"
+            onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+              console.error('Template load error:', templatePath);
+              e.currentTarget.src = "/api/placeholder/192/288";
             }}
           />
         )}
@@ -392,7 +390,7 @@ export const LabelGenerator = () => {
             >
               <option value="">Select Finish</option>
               {finishes.map(finish => (
-                <option key={finish ?? 'unknown'} value={finish ?? ''}>{finish ?? 'Unknown'}</option>
+                <option key={finish} value={finish}>{finish}</option>
               ))}
             </select>
           </div>
