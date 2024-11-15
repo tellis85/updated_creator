@@ -390,7 +390,7 @@ export const LabelGenerator = () => {
             >
               <option value="">Select Finish</option>
               {finishes.map(finish => (
-                <option key={finish} value={finish}>{finish}</option>
+                <option key={finish} value={finish ?? ''}>{finish ?? 'Unknown'}</option>
               ))}
             </select>
           </div>
